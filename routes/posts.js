@@ -3,8 +3,6 @@ const router = express.Router();
 const Post = require('../models/Post');
 var uuid = require('uuid');
 const { request } = require('express');
-var myid = uuid.v4();
-//console.log(myid);
 
 
 // Gets Back all the Posts
@@ -31,9 +29,9 @@ router.get('/:uuid',async(req,res)=>{
 //Submits a Post
 router.post('/', async (req,res)=>{
     const post = new Post({
-        uuid: myid,
         title: req.body.title,
-        description: req.body.description
+        description: req.body.description,
+        uuid: uuid.v4()
     });
     try{
         console.log(post)
