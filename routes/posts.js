@@ -18,7 +18,7 @@ router.get('/',async(req,res)=>{
 // Gets posts by uuid
 router.get('/:uuid',async(req,res)=>{
     try{
-        const posts = await Post.find({uuid: req.params.uuid});
+        const posts = await Post.findOne({uuid: req.params.uuid});
         console.log(posts);
         res.json(posts);
     }catch(err){
@@ -36,7 +36,7 @@ router.post('/', async (req,res)=>{
     try{
         console.log(post)
     const savedPost = await post.save();
-    res.json(savedPost);
+    res.json({uuid:savedPost.uuid})
     }catch(err){
         res.json({message: err});
     }
