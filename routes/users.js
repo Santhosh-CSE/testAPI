@@ -46,7 +46,7 @@ router.post('/signup', (req, res, next) =>{
     })
 });
 
-router.post('/login',(req, res, next) => {
+router.post('/login', (req, res, next) => {
     User.find({email: req.body.email})
     .exec()
     .then(users => {
@@ -65,6 +65,7 @@ router.post('/login',(req, res, next) => {
                 const token = jwt.sign(
                     {
                     email: users[0].email,
+                    password: users[0].password,
                     usersId: users[0]._id
                 }, 
                 process.env.JWT_KEY,
@@ -89,5 +90,19 @@ router.post('/login',(req, res, next) => {
         });
     });
 });
+/*
+let oldTokens = User.token || []
+
+if(oldTokens.length){
+    oldTokens = oldTokens.filter(t => {
+        const timeDiff = (Date.now() - parseInt(t.signedAt)) / 1000
+        if(timeDiff < 86400){
+            return t
+        }
+    });
+}
+User.findByIdAndUpdate(User._id, 
+    {tokens : [...oldTokens, {token, signedAt: Date.now().toString()}]});
+*/
 
 module.exports = router;

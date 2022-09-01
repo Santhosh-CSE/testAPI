@@ -3,20 +3,21 @@ const router = express.Router();
 const Post = require('../models/Post');
 var uuid = require('uuid');
 const { request } = require('express');
+const { checkAuth } = require('../middleware/check-auth');
+const { checkUser } = require('../middleware/check-auth');
 
-
-// Gets Back all the Posts
-router.get('/',async(req,res)=>{
+/* // Gets Back all the Posts
+router.get('/', checkUser, async(req,res)=>{
     try{
         const posts = await Post.find();
         res.json(posts);
     }catch(err){
         res.json({message:err});
     }
-});
+}); */
 
 // Gets posts by uuid
-router.get('/:uuid',async(req,res)=>{
+router.get('/:uuid', checkAuth, async(req,res)=>{
     try{
         const posts = await Post.findOne({uuid: req.params.uuid});
         console.log(posts);
@@ -27,7 +28,7 @@ router.get('/:uuid',async(req,res)=>{
 });
 
 //Submits a Post
-router.post('/', async (req,res)=>{
+router.post('/', checkAuth, async (req,res)=>{
     const post = new Post({
         title: req.body.title,
         description: req.body.description,
