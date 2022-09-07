@@ -3,8 +3,11 @@ const router = express.Router();
 const Post = require('../models/Post');
 var uuid = require('uuid');
 const { request } = require('express');
-const { checkAuth } = require('../middleware/check-auth');
-const { checkUser } = require('../middleware/check-auth');
+const checkAuth = require('../middleware/check-auth');
+const matchUser = require('../middleware/match');
+const { email } = require('../middleware/fetch-data');
+const { usersId } = require('../middleware/fetch-data');
+//const { checkUser } = require('../middleware/check-auth');
 
 /* // Gets Back all the Posts
 router.get('/', checkUser, async(req,res)=>{
@@ -17,7 +20,7 @@ router.get('/', checkUser, async(req,res)=>{
 }); */
 
 // Gets posts by uuid
-router.get('/:uuid', checkAuth, async(req,res)=>{
+router.get('/:uuid', checkAuth, matchUser, async(req,res)=>{
     try{
         const posts = await Post.findOne({uuid: req.params.uuid});
         console.log(posts);
@@ -32,7 +35,9 @@ router.post('/', checkAuth, async (req,res)=>{
     const post = new Post({
         title: req.body.title,
         description: req.body.description,
-        uuid: uuid.v4()
+        uuid: uuid.v4(),
+        emailPost : email,
+        usersIdPost : usersId
     });
     try{
         console.log(post)

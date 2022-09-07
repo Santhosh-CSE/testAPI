@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+//const { email } = require('../middleware/check-auth');
 
 PostSchema = mongoose.Schema({
     
@@ -13,11 +14,15 @@ PostSchema = mongoose.Schema({
     description: {
         type: String,
         required: true
+    },
+    emailPost: {
+      type: String,
+      required: true
+    },
+    usersIdPost: {
+        type: String,
+        required: true
     }
-    //date: {
-      //  type: Date,
-        //default: Date.now
-    //}
 });
 
 

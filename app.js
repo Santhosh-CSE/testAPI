@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-//const { checkUser } = require('./middleware/ckeck-auth');
+
 
 //Should export whatever are imported, CheckUser should be exported
 
@@ -14,7 +14,7 @@ app.use(bodyParser.json());
 const postsRoute = require('./routes/posts');
 const usersRoute = require('./routes/users');
 const checkAuth = require('./middleware/check-auth');
-const checkUser = require('./middleware/check-auth');
+//const checkUser = require('./middleware/check-auth');
 
 app.use('/posts', postsRoute);
 app.use('/users', usersRoute);
